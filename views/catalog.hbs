@@ -1,0 +1,27 @@
+<h1>{{pageName}}</h1>
+<table id="t01" border="1">
+    <thead>
+        <tr>
+            <th>Part</th>
+            <th>Color</th>
+            <th>Supplier</th>
+            <th>City</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#if rows.length }}
+            {{#each rows }}
+                <tr>
+                    <td>{{this.pname}}</td>
+                    <td>{{this.color}}</td>
+                    <td>{{this.sname}}</td>
+                    <td>{{this.city}}</td>
+                    <td>{{this.price}}</td>
+                </tr>
+            {{/each}}
+        {{else}}
+            <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+        {{/if}}
+    </tbody>
+</table>

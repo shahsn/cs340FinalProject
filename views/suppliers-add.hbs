@@ -1,0 +1,24 @@
+<h2>{{message}}</h2>
+
+<form method="post" id="addForm">
+    <fieldset>
+        <legend>Supplier Info:</legend>
+        <p>
+            <label for="sID">Supplier ID:</label>
+            <input type="number" min=1 max=99999 class="required" name="sid" id="sid" title="sid should be numeric">
+        </p>
+        <p>
+            <label for="Name">Supplier Name:</label>
+            <input type="text" class="required" name="sname" id="sname">
+        </p>
+        <p>
+            <label for="City">City:</label>
+            <input type="text" class="required" name="city" id="city">
+    </fieldset>
+
+    <p>
+        <input type="submit" value="Submit" />
+        <input type="reset" value="Clear Form" />
+    </p>
+</form>
+<script type="text/javascript" src="/assets/verify-input.js"></script>
