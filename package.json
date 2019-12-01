@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-web-template",
+  "version": "0.1.0",
+  "description": "Template code for building a simple web application using Express, Handlebars, MySQL, and Forever",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradenhc-osu/nodejs-web-template.git"
+  },
+  "author": "Braden Hitchcock <developer.hitchcock@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bradenhc-osu/nodejs-web-template/issues"
+  },
+  "homepage": "https://github.com/bradenhc-osu/nodejs-web-template#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {
+    "forever": "^1.0.0"
+  }
+}
