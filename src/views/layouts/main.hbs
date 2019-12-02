@@ -4,16 +4,17 @@
 <head>
 
     <meta charset="utf-8">
-    <title>Node.js Template</title>
+    <title>{{pageName}}</title>
 
     <link rel="stylesheet" href="/style.css" media="screen">
 
 </head>
 
 <body>
-
-    {{{body}}}
-
+	{{> header }}	
+	<main>
+ 	   {{{body}}}
+	</main>
 </body>
 
 </html>
