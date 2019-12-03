@@ -73,6 +73,7 @@ app.get('/', connectDb, function(req, res) {
   close(req);
 });
 
+
 app.use('*', (req, res) => {
   res.status(404);
   res.render('error', createViewContext());
