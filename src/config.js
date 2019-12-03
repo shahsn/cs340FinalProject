@@ -1,5 +1,5 @@
 // TODO: Add your database configuration to this file.
-// NOTE: If you are using source code control (like GitHub), make sure you 
+// NOTE: If you are using source code control (like GitHub), make sure you
 //       do not check in passwords!
 //
 module.exports = {
