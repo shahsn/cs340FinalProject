@@ -1,0 +1,12 @@
+<header>
+	<em>Welcome to Restaurant! </em>
+</header>
+<nav>
+	<ul>
+		{{#each menuitems }}
+			<li>
+				<a href='{{this.location}}' {{#ifeq ../pageName this.page}}class="active"{{/ifeq}}>{{this.page}}</a>
+			</li>
+		{{/each}}
+	</ul>
+</nav>
