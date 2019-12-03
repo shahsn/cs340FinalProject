@@ -10,6 +10,11 @@ const exphbs = require('express-handlebars');
 const mysql = require('mysql');
 const path = require('path');
 const { createViewContext } = require('./utils');
+const storeinfoRouter = require('./routes/storeinfo');
+const orderlogRouter = require('./routes/orderlog');
+const menuRouter = require('./routes/menu');
+const loginRouter = require('./routes/login');
+const empRouter = require('./routes/emp');
 
 //create const for every page that has actions (order log, employees, storeinfo, menus, etc
 
@@ -73,6 +78,13 @@ app.get('/', connectDb, function(req, res) {
   close(req);
 });
 
+// Add our routes
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(empRouter);
+app.use(loginRouter);
+app.use(menuRouter);
+app.use(orderlogRouter);
+app.use(storeinfoRouter);
 
 app.use('*', (req, res) => {
   res.status(404);
