@@ -1,1 +1,24 @@
-<h1> Menus</h1>
+<h1>{{pageName}}</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Item Price</th>
+      <th>sID</th>
+    </tr>
+  </thead>
+
+  <tbody>
+          {{#if rows.length }}
+              {{#each rows }}
+                  <tr>
+                      <td>{{this.Item Name}}</td>
+                      <td>{{this.Item Price}}</td>
+                      <td>{{this.sID}}</td>
+                  </tr>
+              {{/each}}
+          {{else}}
+              <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+          {{/if}}
+      </tbody>
+</table>

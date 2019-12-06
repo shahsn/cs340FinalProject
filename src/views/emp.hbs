@@ -1,1 +1,28 @@
-<h1>Employees</h1>
+<h1>{{pageName}}</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Employee Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Job</th>
+      <th>sID</th>
+    </tr>
+  </thead>
+
+  <tbody>
+          {{#if rows.length }}
+              {{#each rows }}
+                  <tr>
+                      <td>{{this.eID}}</td>
+                      <td>{{this.FName}}</td>
+                      <td>{{this.LName}}</td>
+                      <td>{{this.Job}}</td>
+                      <td>{{this.sID}}</td>
+                  </tr>
+              {{/each}}
+          {{else}}
+              <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+          {{/if}}
+      </tbody>
+</table>

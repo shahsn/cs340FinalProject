@@ -8,13 +8,13 @@ const router = express.Router();
  */
 router.get('/emp', (req, res, next) => {
     // TODO: implement the selection query
-    res.render(
-        'emp',
-        createViewContext({
-            pageName: 'Employee Info',
-            rows: []
-        })
-    );
+        res.render(
+            'emp',
+            createViewContext({
+                pageName: 'Employee Info',
+                rows: []
+            })
+        );
 });
 
 /**
