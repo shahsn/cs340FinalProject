@@ -7,14 +7,24 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/menu', (req, res, next) => {
-    // TODO: implement the selection query
-    res.render(
-        'menu',
-        createViewContext({
-            pageName: 'Store Menus',
-            rows: []
-        })
+    req.db.query(
+        `
+        SELECT *
+        FROM Menu m,
+        SORT BY m.sID, m.Item Name
+        `,
+        (err,results)=>{
+            if (err) return next(err);
+            res.render(
+                'menu',
+                createViewContext({
+                    pageName: 'Store Menus',
+                    rows: results
+                })
+            );
+        }
     );
+
 });
 
 /**
