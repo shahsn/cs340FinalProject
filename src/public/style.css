@@ -5,6 +5,7 @@ header{
   font-style: normal;
   font-family: 'Alata', sans-serif;
   font-size: 45px;
+
 }
 
 h1{
@@ -12,10 +13,12 @@ h1{
   font-weight: bold;
   font-style: normal;
   font-family: 'Alata', sans-serif;
+  padding-top: 60px;
+  margin-bottom: 100px;
 }
 
 a{
-  color: #247BA0;
+  color: #1F487E;
   font-weight: bold;
   font-style: normal;
   font-family: 'Alata', sans-serif;
@@ -28,4 +31,48 @@ a:visited{
 button{
   border-radius: 15px;
   padding: 5px;
+  font-family: 'Alata', sans-serif;
+}
+
+input[type="submit" i]{
+  border-radius: 15px;
+  padding: 5px;
+  font-family: 'Alata', sans-serif;
+}
+
+input[type="reset" i]{
+  border-radius: 15px;
+  padding: 5px;
+  font-family: 'Alata', sans-serif;
+}
+
+
+nav li {
+    float: left;
+    border-right:1px solid #bbb;
+    text-decoration: none;
+}
+
+nav li:nth-last-child(-n+5){
+    border-right: none;
+    float:right;
+    border-left:1px solid #bbb;
+    text-decoration: none;
+}
+
+nav li a {
+    display: block;
+  /*  color: white;*/
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+}
+
+li{
+  list-style-type: none;
+}
+
+.side{
+  display: inline-block;
+  margin-bottom: 25px;
 }

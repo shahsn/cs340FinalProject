@@ -44,4 +44,18 @@ router.post('/storeinfo/edit', (req, res, next) => {
     res.render('storeinfo-edit', context);
 });
 
+router.get('/storeinfo/delete', (req, res) => {
+    res.render('storeinfo-delete', createViewContext({ message: 'Delete Store' }));
+});
+
+/**
+ * Logic for actually adding a new "part" supplier using data from a form submission.
+ */
+router.post('/storeinfo/delete', (req, res, next) => {
+    let context = createViewContext();
+
+    // TODO: add the insertion query
+    context.message = 'Delete not implemented yet!';
+    res.render('storeinfo-delete', context);
+});
 module.exports = router;
