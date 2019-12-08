@@ -7,13 +7,22 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/orderlog', (req, res, next) => {
-    // TODO: implement the selection query
-    res.render(
-        'orderlog',
-        createViewContext({
-            pageName: 'Order Log',
-            rows: []
-        })
+    req.db.query(
+        `
+        SELECT * 
+        FROM Order_Log o,
+        SORT BY o.sID, o.oID
+        `,
+        (err,results)=>{
+            if (err) return next(err);
+            res.render(
+                'orderlog',
+                createViewContext({
+                    pageName: 'Order Log',
+                    rows: results
+                })
+            );
+        }
     );
 });
 
