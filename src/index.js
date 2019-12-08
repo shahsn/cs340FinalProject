@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const { createViewContext } = require('./utils');
+const homeRouter = require('./routes/home');
 const storeinfoRouter = require('./routes/storeinfo');
 const orderlogRouter = require('./routes/orderlog');
 const menuRouter = require('./routes/menu');
@@ -79,8 +80,21 @@ app.get('/', connectDb, function(req, res) {
   close(req);
 });
 
+
+
 // Add our routes
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(homeRouter);
+
+app.get('/home', connectDb, function(req, res) {
+  console.log('Got request for the home page');
+
+  res.render('home',createViewContext());
+
+  close(req);
+});
+
+
 app.use(empRouter);
 app.use(loginRouter);
 app.use(menuRouter);

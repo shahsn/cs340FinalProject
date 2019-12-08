@@ -1,0 +1,35 @@
+<h2> {{message}} </h2>
+
+<form method = "post" id = "addForm">
+  <fieldset>
+    <legend> Employee Info </legend>
+    <p>
+      <label for "eID"> Employee ID: </label>
+      <input type ="number" min=1 max =9999999999 class ="required" name="eID" id="eID">
+    </p>
+
+    <p>
+      <label for "FName"> First Name: </label>
+      <input type ="text" class ="required" name="FName" id="FName">
+    </p>
+
+    <p>
+      <label for "LName"> Last Name: </label>
+      <input type ="text" class ="required" name="LName" id="LName">
+    </p>
+
+    <p>
+      <label for "Job"> Job: </label>
+      <input type ="text" class ="required" name="Job" id="Job">
+    </p>
+
+    <p>
+      <label for "sID"> Store ID: </label>
+      <input type ="number" min=1 max =9999999999 class ="required" name="sID" id="sID">
+    </p>
+
+    <p>
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Clear" />
+    </p>
+  </form>
