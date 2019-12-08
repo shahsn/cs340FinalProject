@@ -19,6 +19,7 @@ module.exports = {
                     { location: '/login', page: 'Login' },
                     { location: '/storeinfo', page: 'Location and Hours' },
                     { location: '/menu', page: 'Menus' },
+                    { location: '/orderlog', page: 'Order Log' },
                     { location: '/emp', page: 'Employees' }
                 ]
             },

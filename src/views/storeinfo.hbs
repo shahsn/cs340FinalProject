@@ -1,1 +1,29 @@
-<h1> Location and Hours</h1>
+<h1>{{pageName}}</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Store ID</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>Zip</th>
+      <th>Hours</th>
+    </tr>
+  </thead>
+
+  <tbody>
+          {{#if rows.length }}
+              {{#each rows }}
+                  <tr>
+                      <td>{{this.sID}}</td>
+                      <td>{{this.Street}}</td>
+                      <td>{{this.City}}</td>
+                      <td>{{this.ZIP}}</td>
+                      <td>{{this.Hours}}</td>
+                  </tr>
+              {{/each}}
+          {{else}}
+              <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+          {{/if}}
+      </tbody>
+</table>

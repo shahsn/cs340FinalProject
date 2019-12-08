@@ -1,1 +1,29 @@
-<h1> order log </h1>
+<h1>{{pageName}}</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Customer Name</th>
+      <th>Total Price</th>
+      <th>Date</th>
+      <th>sID</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+          {{#if rows.length }}
+              {{#each rows }}
+                  <tr>
+                      <td>{{this.oID}}</td>
+                      <td>{{this.Customer FName}}</td>
+                      <td>{{this.Total Price}}</td>
+                      <td>{{this.Date}}</td>
+                      <td>{{this.sID}}</td>
+                  </tr>
+              {{/each}}
+          {{else}}
+              <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+          {{/if}}
+      </tbody>
+</table>
