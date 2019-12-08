@@ -1,7 +1,31 @@
-html, body {
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 100%;
-  color: blue;
+header{
+  height: 70px;
+  color: #fb3640;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Alata', sans-serif;
+  font-size: 45px;
+}
+
+h1{
+  color: #1D3461;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Alata', sans-serif;
+}
+
+a{
+  color: #247BA0;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Alata', sans-serif;
+}
+
+a:visited{
+  color: #605F5E;
+}
+
+button{
+  border-radius: 15px;
+  padding: 5px;
 }

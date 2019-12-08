@@ -1,0 +1,35 @@
+<h2> {{message}} </h2>
+
+<form method = "post" id = "addForm">
+  <fieldset>
+    <legend> Order Log Info: </legend>
+    <p>
+      <label for "oID"> Order Number: </label>
+      <input type ="number" min=1 max =9999999999 class ="required" name="oID" id="oID">
+    </p>
+
+    <p>
+      <label for "Customer FName"> Customer First Name: </label>
+      <input type ="text" class ="required" name="Customer FName" id="Customer FName">
+    </p>
+
+    <p>
+      <label for "Total Price"> Total: </label>
+      <input type ="number" class ="required" name="Total Price" id="Total Price">
+    </p>
+
+    <p>
+      <label for "Date"> Date: </label>
+      <input type ="text" class ="required" name="Date" id="Date">
+    </p>
+
+    <p>
+      <label for "sID"> Store ID: </label>
+      <input type ="number" min=1 max =9999999999 class ="required" name="sID" id="sID">
+    </p>
+    
+    <p>
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Clear" />
+    </p>
+  </form>
