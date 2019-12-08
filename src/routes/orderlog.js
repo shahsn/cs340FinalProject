@@ -35,4 +35,19 @@ router.post('/orderlog/edit', (req, res, next) => {
     res.render('orderlog-edit', context);
 });
 
+router.get('/orderlog/delete', (req, res) => {
+    res.render('orderlog-delete', createViewContext({ message: 'Delete Order' }));
+});
+
+/**
+ * Logic for actually adding a new "part" supplier using data from a form submission.
+ */
+router.post('/orderlog/delete', (req, res, next) => {
+    let context = createViewContext();
+
+    // TODO: add the insertion query
+    context.message = 'Delete not implemented yet!';
+    res.render('orderlog-delete', context);
+});
+
 module.exports = router;

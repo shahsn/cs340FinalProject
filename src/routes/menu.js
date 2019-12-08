@@ -35,4 +35,19 @@ router.post('/menu/edit', (req, res, next) => {
     res.render('menu-edit', context);
 });
 
+router.get('/menu/delete', (req, res) => {
+    res.render('menu-delete', createViewContext({ message: 'Remove Menu' }));
+});
+
+/**
+ * Logic for actually adding a new "part" supplier using data from a form submission.
+ */
+router.post('/menu/delete', (req, res, next) => {
+    let context = createViewContext();
+
+    // TODO: add the insertion query
+    context.message = 'Delete not implemented yet!';
+    res.render('menu-delete', context);
+});
+
 module.exports = router;
