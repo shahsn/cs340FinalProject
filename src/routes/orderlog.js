@@ -11,7 +11,7 @@ router.get('/orderlog', (req, res, next) => {
         `
         SELECT *
         FROM Order_Log o
-        SORT BY o.sID, o.oID
+        ORDER BY o.sID, o.oID
         `,
         (err,results)=>{
             if (err) return next(err);

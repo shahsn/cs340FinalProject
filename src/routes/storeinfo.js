@@ -11,7 +11,7 @@ router.get('/storeinfo', (req, res, next) => {
         `
         SELECT *
         FROM Store s
-        SORT BY s.sID
+        ORDER BY s.sID
         `,
         (err,results)=>{
             if (err) return next(err);
