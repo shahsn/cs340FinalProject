@@ -72,9 +72,9 @@ app.use((req, res, next) => {
 					return next(err);
         }
 				req.db = conn;
+        console.log("successfull connection to database");
         next();
     });
-		console.log("successfull connection to database");
 });
 
 /**
@@ -86,8 +86,6 @@ app.get('/', function(req, res) {
   console.log('Got request for the home page');
 
   res.render('home',createViewContext());
-
-  close(req);
 });
 
 
