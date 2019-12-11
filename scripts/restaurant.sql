@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: classmysql.engr.oregonstate.edu:3306
--- Generation Time: Dec 02, 2019 at 03:42 PM
+-- Generation Time: Dec 11, 2019 at 01:49 AM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.0.33
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Employee` (
   `eID` int(9) NOT NULL,
-  `FName` char(20) NOT NULL,
-  `LName` char(20) NOT NULL,
-  `Job` char(20) NOT NULL,
+  `fName` char(20) NOT NULL,
+  `lName` char(20) NOT NULL,
+  `job` char(20) NOT NULL,
   `sID` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,7 +40,7 @@ CREATE TABLE `Employee` (
 -- Dumping data for table `Employee`
 --
 
-INSERT INTO `Employee` (`eID`, `FName`, `LName`, `Job`, `sID`) VALUES
+INSERT INTO `Employee` (`eID`, `fName`, `lName`, `job`, `sID`) VALUES
 (111111111, 'John', 'Smith', 'Cashier', 100000001),
 (111111112, 'Morgan', 'Bonds', 'Manager', 100000002),
 (111111113, 'Jacob', 'Edgerton', 'Cashier', 100000003),
@@ -59,8 +59,8 @@ INSERT INTO `Employee` (`eID`, `FName`, `LName`, `Job`, `sID`) VALUES
 --
 
 CREATE TABLE `Menu` (
-  `Item Name` char(20) NOT NULL,
-  `Item Price` decimal(3,2) NOT NULL,
+  `itemName` char(20) NOT NULL,
+  `itemPrice` decimal(3,2) NOT NULL,
   `sID` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,7 +68,7 @@ CREATE TABLE `Menu` (
 -- Dumping data for table `Menu`
 --
 
-INSERT INTO `Menu` (`Item Name`, `Item Price`, `sID`) VALUES
+INSERT INTO `Menu` (`itemName`, `itemPrice`, `sID`) VALUES
 ('Burger', '3.00', 100000001),
 ('Chicken Sandwhich', '3.00', 100000004),
 ('Double Burger', '5.00', 100000007),
@@ -88,15 +88,15 @@ INSERT INTO `Menu` (`Item Name`, `Item Price`, `sID`) VALUES
 
 CREATE TABLE `Order_Items` (
   `oID` int(9) NOT NULL,
-  `Item Name` char(20) NOT NULL,
-  `Quantity` int(9) NOT NULL
+  `itemName` char(20) NOT NULL,
+  `quantity` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Order_Items`
 --
 
-INSERT INTO `Order_Items` (`oID`, `Item Name`, `Quantity`) VALUES
+INSERT INTO `Order_Items` (`oID`, `itemName`, `quantity`) VALUES
 (1, 'French Fries', 1),
 (1, 'Pizza', 1),
 (2, 'Soda', 9),
@@ -117,9 +117,9 @@ INSERT INTO `Order_Items` (`oID`, `Item Name`, `Quantity`) VALUES
 
 CREATE TABLE `Order_Log` (
   `oID` int(9) NOT NULL,
-  `Customer FName` char(20) NOT NULL,
-  `Total Price` decimal(5,2) NOT NULL,
-  `Date` char(20) NOT NULL,
+  `customerFName` char(20) NOT NULL,
+  `totalPrice` decimal(5,2) NOT NULL,
+  `date` char(20) NOT NULL,
   `sID` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -127,7 +127,7 @@ CREATE TABLE `Order_Log` (
 -- Dumping data for table `Order_Log`
 --
 
-INSERT INTO `Order_Log` (`oID`, `Customer FName`, `Total Price`, `Date`, `sID`) VALUES
+INSERT INTO `Order_Log` (`oID`, `customerFName`, `totalPrice`, `date`, `sID`) VALUES
 (1, 'Zach', '9.99', '11/28/19', 100000001),
 (2, 'Bob', '9.00', '11/29/19', 100000002),
 (3, 'Andre', '3.00', '11/28/19', 100000003),
@@ -147,17 +147,17 @@ INSERT INTO `Order_Log` (`oID`, `Customer FName`, `Total Price`, `Date`, `sID`) 
 
 CREATE TABLE `Store` (
   `sID` int(9) NOT NULL,
-  `Street` char(20) NOT NULL,
-  `City` char(20) NOT NULL,
-  `ZIP` int(9) NOT NULL,
-  `Hours` char(20) NOT NULL
+  `street` char(20) NOT NULL,
+  `city` char(20) NOT NULL,
+  `zip` int(9) NOT NULL,
+  `hours` char(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Store`
 --
 
-INSERT INTO `Store` (`sID`, `Street`, `City`, `ZIP`, `Hours`) VALUES
+INSERT INTO `Store` (`sID`, `street`, `city`, `zip`, `hours`) VALUES
 (100000001, '2661 Farm Meadow Dri', 'Lake Havasu City', 86403, '7:00am - 11:00pm'),
 (100000002, '1902 McKinley Avenue', 'Englewood', 80110, '8:00am - 11:59pm'),
 (100000003, '4057 Denver Avenue', 'Pomona', 91766, '7:00am - 11:00pm'),
@@ -184,16 +184,16 @@ ALTER TABLE `Employee`
 -- Indexes for table `Menu`
 --
 ALTER TABLE `Menu`
-  ADD PRIMARY KEY (`Item Name`,`sID`),
+  ADD PRIMARY KEY (`itemName`,`sID`),
   ADD KEY `sID` (`sID`);
 
 --
 -- Indexes for table `Order_Items`
 --
 ALTER TABLE `Order_Items`
-  ADD PRIMARY KEY (`oID`,`Item Name`),
+  ADD PRIMARY KEY (`oID`,`itemName`),
   ADD KEY `oID` (`oID`),
-  ADD KEY `Item Name` (`Item Name`);
+  ADD KEY `Item Name` (`itemName`);
 
 --
 -- Indexes for table `Order_Log`
@@ -229,7 +229,7 @@ ALTER TABLE `Menu`
 --
 ALTER TABLE `Order_Items`
   ADD CONSTRAINT `Order_Items_ibfk_1` FOREIGN KEY (`oID`) REFERENCES `Order_Log` (`oID`),
-  ADD CONSTRAINT `Order_Items_ibfk_2` FOREIGN KEY (`Item Name`) REFERENCES `Menu` (`Item Name`);
+  ADD CONSTRAINT `Order_Items_ibfk_2` FOREIGN KEY (`itemName`) REFERENCES `Menu` (`itemName`);
 
 --
 -- Constraints for table `Order_Log`

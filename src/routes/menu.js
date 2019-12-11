@@ -11,7 +11,7 @@ router.get('/menu', (req, res, next) => {
         `
         SELECT *
         FROM Menu m
-        ORDER BY m.sID, m.Item, m.Name
+        ORDER BY m.sID, m.itemName
         `,
         (err,results)=>{
             if (err) return next(err);
