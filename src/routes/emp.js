@@ -7,6 +7,7 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/emp', (req, res, next) => {
+  if (req.permissions == 2) {
     req.db.query(
         `
         SELECT *
@@ -24,8 +25,15 @@ router.get('/emp', (req, res, next) => {
             );
         }
     );
-});
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 
+});
 
 router.get('/emp/edit', (req, res) => {
     res.render('emp-edit', createViewContext({ message: 'Edit Employees' }));

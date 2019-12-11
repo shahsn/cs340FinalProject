@@ -18,6 +18,7 @@ const menuRouter = require('./routes/menu');
 const loginRouter = require('./routes/login');
 const empRouter = require('./routes/emp');
 const permissionRouter = require('./routes/permission_error');
+const permissions = 2;
 
 //create const for every page that has actions (order log, employees, storeinfo, menus, etc
 
@@ -61,6 +62,7 @@ app.use(express.static(path.join(path.basename(__dirname), 'public')));
 const config = require('./config');
 app.use((req, res, next) => {
 		console.log("connecting to database");
+    req.permissions = permissions;
     let conn = mysql.createConnection({
         host: config.host,
         user: config.user,
