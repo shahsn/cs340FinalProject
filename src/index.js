@@ -64,7 +64,7 @@ app.use((req, res, next) => {
         host: config.host,
         user: config.user,
         password: config.password,
-        database: config.dbname
+        database: config.database
     });
     conn.connect((err) => {
         if (err) {
