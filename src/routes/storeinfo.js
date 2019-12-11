@@ -9,8 +9,8 @@ const router = express.Router();
 router.get('/storeinfo', (req, res, next) => {
     req.db.query(
         `
-        SELECT * 
-        FROM Store s,
+        SELECT *
+        FROM Store s
         SORT BY s.sID
         `,
         (err,results)=>{

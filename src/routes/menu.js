@@ -10,7 +10,7 @@ router.get('/menu', (req, res, next) => {
     req.db.query(
         `
         SELECT *
-        FROM Menu m,
+        FROM Menu m
         SORT BY m.sID, m.Item Name
         `,
         (err,results)=>{

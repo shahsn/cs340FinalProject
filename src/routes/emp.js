@@ -10,8 +10,8 @@ router.get('/emp', (req, res, next) => {
     // TODO: implement the selection query
     req.db.query(
         `
-        SELECT * 
-        FROM Employee e,
+        SELECT *
+        FROM Employee e
         ORDER BY e.eID
         `,
         (err,results) => {
