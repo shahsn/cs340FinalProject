@@ -58,21 +58,31 @@ app.use(express.static(path.join(path.basename(__dirname), 'public')));
  * initialize a new connection to our MySQL database on every request.
  */
 const config = require('./config');
-function connectDb(req, res, next) {
-  console.log('Connecting to the database');
-  let connection = mysql.createConnection(config);
-  connection.connect();
-  req.db = connection;
-  console.log('Database connected');
-  next();
-}
+app.use((req, res, next) => {
+		console.log("connecting to database");
+    let conn = mysql.createConnection({
+        host: config.host,
+        user: config.user,
+        password: config.password,
+        database: config.dbname
+    });
+    conn.connect((err) => {
+        if (err) {
+					console.log("failed connecting to database");
+					return next(err);
+        }
+				req.db = conn;
+        next();
+    });
+		console.log("successfull connection to database");
+});
 
 /**
  * This is the handler for our main page. The middleware pipeline includes
  * our custom `connectDb()` function that creates our database connection and
  * exposes it as `req.db`.
  */
-app.get('/', connectDb, function(req, res) {
+app.get('/', function(req, res) {
   console.log('Got request for the home page');
 
   res.render('home',createViewContext());
@@ -85,15 +95,15 @@ app.get('/', connectDb, function(req, res) {
 // Add our routes
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(homeRouter);
-
-app.get('/home', connectDb, function(req, res) {
+/*
+app.get('/home', function(req, res) {
   console.log('Got request for the home page');
 
   res.render('home',createViewContext());
 
   close(req);
 });
-
+*/
 
 app.use(empRouter);
 app.use(loginRouter);
@@ -111,6 +121,7 @@ app.use('*', (req, res) => {
  *
  * @param {Express.Request} req the request object passed to our middleware
  */
+ /*
 function close(req) {
   if (req.db) {
     req.db.end();
@@ -118,7 +129,7 @@ function close(req) {
     console.log('Database connection closed');
   }
 }
-
+*/
 /**
  * Capture the port configuration for the server. We use the PORT environment
  * variable's value, but if it is not set, we will default to port 3000.
