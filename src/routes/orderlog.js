@@ -9,9 +9,9 @@ const router = express.Router();
 router.get('/orderlog', (req, res, next) => {
     req.db.query(
         `
-        SELECT * 
-        FROM Order_Log o,
-        SORT BY o.sID, o.oID
+        SELECT *
+        FROM Order_Log o
+        ORDER BY o.sID, o.oID
         `,
         (err,results)=>{
             if (err) return next(err);

@@ -10,8 +10,8 @@ router.get('/menu', (req, res, next) => {
     req.db.query(
         `
         SELECT *
-        FROM Menu m,
-        SORT BY m.sID, m.Item Name
+        FROM Menu m
+        ORDER BY m.sID, m.itemName
         `,
         (err,results)=>{
             if (err) return next(err);
