@@ -7,7 +7,6 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/emp', (req, res, next) => {
-    // TODO: implement the selection query
     req.db.query(
         `
         SELECT *
@@ -35,9 +34,24 @@ router.get('/emp/edit', (req, res) => {
 router.post('/emp/edit', (req, res, next) => {
     let context = createViewContext();
 
-    // TODO: add the insertion query
-    context.message = 'Add not implemented yet!';
-    res.render('emp-edit', context);
+    req.db.query(`SELECT * FROM Employee e WHERE e.eID = ?`,[req.body.eID], (err,results) => {
+        if (err) return next(err);
+
+        if (results.length){
+            context.message = 'cant add that new employee, that employee already exists';
+            res.render('emp-edit',context);
+        }else {
+            req.db.query(
+                `INSERT INTO Employee (eID, fName, lName,job,sID) VALUES (?,?,?,?,?)`,
+                [req.body.eID, req.body.fName, req.body.lName, req.body.Job, req.body.sID],
+                err => {
+                    if(err) return next(err);
+                    context.message = 'Added new Employee';
+                    res.render('emp-edit', context);
+                }
+            );
+        }
+    });
 });
 
 router.get('/emp/delete', (req, res) => {
@@ -48,9 +62,24 @@ router.get('/emp/delete', (req, res) => {
 router.post('/emp/delete', (req, res, next) => {
     let context = createViewContext();
 
-    // TODO: add the insertion query
-    context.message = 'Add not implemented yet!';
-    res.render('emp-delete', context);
+    req.db.query(`SELECT * FROM Employee WHERE eID = ? `,[req.body.eID], (err,results) => {
+        if (err) return next(err);
+
+        if (results.length){
+            req.db.query(
+                `DELETE FROM Employee WHERE eID = ?`,
+                [req.body.eID],
+                err => {
+                    if(err) return next(err);
+                    context.message = 'removed an employee';
+                    res.render('emp-delete', context);
+                }
+            );
+        }else {
+            context.message = 'cant delete that employee, they dont exist in the system';
+            res.render('emp-delete',context);
+        }
+    });
 });
 
 module.exports = router;

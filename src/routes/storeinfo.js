@@ -26,36 +26,58 @@ router.get('/storeinfo', (req, res, next) => {
     );
 });
 
-/**
- * Route for displaying the form used to add a new part supplier.
- */
 router.get('/storeinfo/edit', (req, res) => {
     res.render('storeinfo-edit', createViewContext({ message: 'Edit Stores' }));
 });
 
-/**
- * Logic for actually adding a new "part" supplier using data from a form submission.
- */
+
 router.post('/storeinfo/edit', (req, res, next) => {
     let context = createViewContext();
+    req.db.query(`SELECT * FROM Store s WHERE s.sID = ?`,[req.body.sID], (err,results) => {
+        if (err) return next(err);
 
-    // TODO: add the insertion query
-    context.message = 'Add not implemented yet!';
-    res.render('storeinfo-edit', context);
+        if (results.length){
+            context.message = 'cant add that Store, it already exists!';
+            res.render('storeinfo-edit',context);
+        }else {
+            req.db.query(
+                `INSERT INTO Store (sID, street, city, zip, hours) VALUES (?,?,?,?,?)`,
+                [req.body.sID, req.body.Street, req.body.City, req.body.ZIP, req.body.Hours],
+                err => {
+                    if(err) return next(err);
+                    context.message = 'Added new Store!';
+                    res.render('storeinfo-edit', context);
+                }
+            );
+        }
+    });
 });
 
 router.get('/storeinfo/delete', (req, res) => {
     res.render('storeinfo-delete', createViewContext({ message: 'Delete Store' }));
 });
 
-/**
- * Logic for actually adding a new "part" supplier using data from a form submission.
- */
+
 router.post('/storeinfo/delete', (req, res, next) => {
     let context = createViewContext();
 
-    // TODO: add the insertion query
-    context.message = 'Delete not implemented yet!';
-    res.render('storeinfo-delete', context);
+    req.db.query(`SELECT * FROM Store WHERE sID = ? `,[req.body.sID], (err,results) => {
+        if (err) return next(err);
+
+        if (results.length){
+            req.db.query(
+                `DELETE FROM Store WHERE sID = ?`,
+                [req.body.sID],
+                err => {
+                    if(err) return next(err);
+                    context.message = 'deleted a Store!';
+                    res.render('storeinfo-delete', context);
+                }
+            );
+        }else {
+            context.message = 'cant delete that Store, it doesnt exist!';
+            res.render('storeinfo-delete',context);
+        }
+    });
 });
 module.exports = router;
