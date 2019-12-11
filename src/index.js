@@ -109,7 +109,6 @@ app.use(loginRouter);
 app.use(menuRouter);
 app.use(orderlogRouter);
 app.use(storeinfoRouter);
-app.use(storeinfoRouter);
 app.use(permissionRouter);
 
 app.use('*', (req, res) => {
