@@ -17,6 +17,8 @@ const orderlogRouter = require('./routes/orderlog');
 const menuRouter = require('./routes/menu');
 const loginRouter = require('./routes/login');
 const empRouter = require('./routes/emp');
+const permissionRouter = require('./routes/permission_error');
+
 
 //create const for every page that has actions (order log, employees, storeinfo, menus, etc
 
@@ -108,6 +110,8 @@ app.use(loginRouter);
 app.use(menuRouter);
 app.use(orderlogRouter);
 app.use(storeinfoRouter);
+app.use(permissionRouter);
+
 
 app.use('*', (req, res) => {
   res.status(404);

@@ -1,12 +1,15 @@
+<div class = "thuyvy">
 <header>
 	Database Diner
 </header>
-<nav>
-	<ul>
+<nav class ="thuyvy">
+	<ul class ="thuyvy">
 		{{#each menuitems }}
-			<li>
+			<li class ="thuyvy">
 				<a href='{{this.location}}' {{#ifeq ../pageName this.page}}class="active"{{/ifeq}}>{{this.page}}</a>
 			</li>
 		{{/each}}
 	</ul>
 </nav>
+
+</div>
