@@ -38,7 +38,7 @@ router.post('/login', (req, res, next) => {
     console.log("test3");
     req.db.query(`SELECT * FROM Employee e WHERE e.eID = ?`, [req.body.eID], (err,results) => {
       if (err) return next(err);
-      if (result.length){
+      if (results.length){
         console.log("test4");
         req.session.permissions = 1;
         res.render(
