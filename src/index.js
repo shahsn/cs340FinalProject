@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const { createViewContext } = require('./utils');
+const session = require('express-session')
 const homeRouter = require('./routes/home');
 const storeinfoRouter = require('./routes/storeinfo');
 const orderlogRouter = require('./routes/orderlog');
@@ -54,30 +55,38 @@ app.set('views', path.join(path.basename(__dirname), 'views'));
 app.use(express.static(path.join(path.basename(__dirname), 'public')));
 
 
+// Make session for storing permissions
+app.use(session({
+  secret: 'fbi rank',
+  resave: false,
+  saveUninitialized: true
+}));
 
 /**
- * Create a database connection. This is our middleware function that will
- * initialize a new connection to our MySQL database on every request.
+ * Create a database connection. Also, intialize permsissions to 0
  */
 const config = require('./config');
 app.use((req, res, next) => {
-		console.log("connecting to database");
-    req.permissions = permissions;
-    let conn = mysql.createConnection({
-        host: config.host,
-        user: config.user,
-        password: config.password,
-        database: config.database
-    });
-    conn.connect((err) => {
-        if (err) {
-					console.log("failed connecting to database");
-					return next(err);
-        }
-				req.db = conn;
-        console.log("successfull connection to database");
-        next();
-    });
+  if (!req.session.permissions) {
+    req.session.permissions = 0;
+  }
+
+	console.log("connecting to database");
+  let conn = mysql.createConnection({
+      host: config.host,
+      user: config.user,
+      password: config.password,
+      database: config.database
+  });
+  conn.connect((err) => {
+      if (err) {
+				console.log("failed connecting to database");
+				return next(err);
+      }
+			req.db = conn;
+      console.log("successfull connection to database");
+      next();
+  });
 });
 
 /**
