@@ -6,17 +6,19 @@
 <form class="side" action="/orderlog/delete" method = "get">
   <button class="side">Delete</button>
 </form>
-<input type="submit" value="View Selected Order:" />
 
-<select id="view-order">
-  {{#if rows.length }}
-      {{#each rows }}
-            <option value = "{{this.oID}}">  {{this.oID}}</option>
-      {{/each}}
-  {{else}}
-      <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
-  {{/if}}
-</select>
+<form id="tableForm" action="/orderlog" method="post">
+  <button class="side">View order items of order ID:</button>
+  <select class="searchOrders" name="searchOrders" id="view">
+    {{#if stores.length }}
+        {{#each stores }}
+              <option value = "{{this.oID}}">  {{this.oID}}</option>
+        {{/each}}
+    {{else}}
+        <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+    {{/if}}
+  </select>
+</form>
 
 
 

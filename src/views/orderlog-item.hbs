@@ -1,4 +1,4 @@
-<h2> {{message}} </h2>
+<h1> Order Items </h1>
 
 <table>
   <thead>
@@ -15,8 +15,8 @@
               {{#each rows }}
                   <tr>
                       <td>{{this.oID}}</td>
-                      <td>{{this.Item Name}}</td>
-                      <td>{{this.Quantity}}</td>
+                      <td>{{this.itemName}}</td>
+                      <td>{{this.quantity}}</td>
 
                   </tr>
               {{/each}}

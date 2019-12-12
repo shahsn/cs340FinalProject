@@ -23,6 +23,7 @@ router.get('/menu', (req, res, next) => {
               ORDER BY s.sID
               `,
               (err,storeResults)=>{
+                if (err) return next(err);
                 res.render(
                     'menu',
                     createViewContext({
@@ -39,7 +40,6 @@ router.get('/menu', (req, res, next) => {
 });
 
 router.post('/menu', (req, res, next) => {
-  console.log(req.body);
   req.db.query(
       `
       SELECT *
@@ -56,6 +56,7 @@ router.post('/menu', (req, res, next) => {
             ORDER BY s.sID
             `,
             (err,storeResults)=>{
+              if (err) return next(err);
               res.render(
                   'menu',
                   createViewContext({
