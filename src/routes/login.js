@@ -32,7 +32,7 @@ router.post('/login', (req, res, next) => {
       })
     )
   }
-  else if (true){
+  else{
     req.db.query(`SELECT * FROM Employee e WHERE e.eID = ?`, [req.body.eID], (err,results) => {
       if (err) return next(err);
       if (results.length){
@@ -45,17 +45,16 @@ router.post('/login', (req, res, next) => {
           })
         )
       }
+      else {
+        req.session.permissions = 0;
+        res.render(
+          'home',
+          createViewContext({
+              pageName: 'Customer Page'/*,
+              rows: []*/
+          })
+        )
     });
-  }
-  else {
-    req.session.permissions = 0;
-    res.render(
-      'home',
-      createViewContext({
-          pageName: 'Customer Page'/*,
-          rows: []*/
-      })
-    )
   }
 });
 module.exports = router;
