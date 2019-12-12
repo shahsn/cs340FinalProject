@@ -1,3 +1,4 @@
+
 header{
   height: 70px;
   color: #fb3640;
@@ -13,8 +14,7 @@ h1{
   font-weight: bold;
   font-style: normal;
   font-family: 'Alata', sans-serif;
-  padding-top: 60px;
-  margin-bottom: 100px;
+  padding-top: -10px;
 }
 
 a{
@@ -28,6 +28,16 @@ a:visited{
   color: #605F5E;
 }
 
+.thuyvy{
+
+}
+
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
 button{
   border-radius: 15px;
   padding: 5px;
@@ -53,6 +63,11 @@ nav li {
     text-decoration: none;
 }
 
+th, td{
+  padding-right: 10px;
+  text-align: left;
+}
+
 nav li:nth-last-child(-n+5){
     border-right: none;
     float:right;
@@ -67,12 +82,42 @@ nav li a {
     padding: 10px 16px;
     text-decoration: none;
 }
-
+th{
+  text-decoration: underline;
+}
 li{
   list-style-type: none;
 }
 
+body .vsc-initialized{
+  background-color: pink;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
 .side{
   display: inline-block;
   margin-bottom: 25px;
+}
+
+.view{
+  display: inline-block;
 }
