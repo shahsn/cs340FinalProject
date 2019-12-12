@@ -34,20 +34,22 @@ router.post('/login', (req, res, next) => {
       })
     )
   }
-  else if (
+  else if (true){
+    console.log("test3");
     req.db.query(`SELECT * FROM Employee e WHERE e.eID = ?`, [req.body.eID], (err,results) => {
       if (err) return next(err);
-    }).length > 0
-  ){
-    console.log("test3");
-    req.session.permissions = 1;
-    res.render(
-      'home',
-      createViewContext({
-          pageName: 'Employee Page'/*,
-          rows: []*/
-      })
-    )
+      if (result.length){
+        console.log("test4");
+        req.session.permissions = 1;
+        res.render(
+          'home',
+          createViewContext({
+              pageName: 'Employee Page'/*,
+              rows: []*/
+          })
+        )
+      }
+    });
   }
   else {
     req.session.permissions = 0;
