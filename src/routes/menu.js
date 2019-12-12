@@ -15,34 +15,56 @@ router.get('/menu', (req, res, next) => {
         `,
         (err,results)=>{
             if (err) return next(err);
-            res.render(
-                'menu',
-                createViewContext({
-                    pageName: 'Store Menus',
-                    rows: results
-                })
+
+            req.db.query(
+              `
+              SELECT *
+              FROM Store s
+              ORDER BY s.sID
+              `,
+              (err,storeResults)=>{
+                res.render(
+                    'menu',
+                    createViewContext({
+                        pageName: 'Store Menus',
+                        rows: results,
+                        stores: storeResults
+                    })
+                );
+              }
             );
         }
     );
 
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/menu', (req, res, next) => {
+  console.log(req.body);
   req.db.query(
       `
       SELECT *
       FROM Menu m
       WHERE m.sID = ?
       ORDER BY m.sID, m.itemName
-      `, [req.body.sID],
+      `, [req.body.searchMenu],
       (err,results)=>{
           if (err) return next(err);
-          res.render(
-              'menu',
-              createViewContext({
-                  pageName: 'Store Menu',
-                  rows: results
-              })
+          req.db.query(
+            `
+            SELECT *
+            FROM Store s
+            ORDER BY s.sID
+            `,
+            (err,storeResults)=>{
+              res.render(
+                  'menu',
+                  createViewContext({
+                      pageName: 'Store Menus',
+                      rows: results,
+                      stores: storeResults
+                  })
+              );
+            }
           );
       }
   );

@@ -8,6 +8,19 @@
 <form class="side" action="/menu/delete" method = "get">
   <button class="side">Delete</button>
 </form>
+<form id="tableForm" action="/menu" method="post">
+  <button class="side">View menu from selected store:</button>
+  <select class="searchMenu" name="searchMenu" id="view">
+    {{#if stores.length }}
+        {{#each stores }}
+              <option value = "{{this.sID}}">  {{this.sID}}</option>
+        {{/each}}
+    {{else}}
+        <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+    {{/if}}
+  </select>
+</form>
+
 </div>
 <table>
   <thead>
