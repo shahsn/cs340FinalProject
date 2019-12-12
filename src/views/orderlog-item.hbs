@@ -1,0 +1,27 @@
+<h2> {{message}} </h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Item Name</th>
+      <th>Quantity</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+          {{#if rows.length }}
+              {{#each rows }}
+                  <tr>
+                      <td>{{this.oID}}</td>
+                      <td>{{this.Item Name}}</td>
+                      <td>{{this.Quantity}}</td>
+
+                  </tr>
+              {{/each}}
+          {{else}}
+              <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+          {{/if}}
+      </tbody>
+</table>
