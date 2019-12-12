@@ -7,7 +7,7 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/emp', (req, res, next) => {
-  if (req.session.permissions == 1) {
+  if (req.session.permissions == 2) {
     req.db.query(
         `
         SELECT *
@@ -36,7 +36,15 @@ router.get('/emp', (req, res, next) => {
 });
 
 router.get('/emp/edit', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('emp-edit', createViewContext({ message: 'Edit Employees' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 router.post('/emp/edit', (req, res, next) => {
@@ -63,7 +71,15 @@ router.post('/emp/edit', (req, res, next) => {
 });
 
 router.get('/emp/delete', (req, res) => {
+  if (req.session.permissions) {
     res.render('emp-delete', createViewContext({ message: 'Remove Employee' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 

@@ -27,7 +27,15 @@ router.get('/storeinfo', (req, res, next) => {
 });
 
 router.get('/storeinfo/edit', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('storeinfo-edit', createViewContext({ message: 'Edit Stores' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 
@@ -54,7 +62,15 @@ router.post('/storeinfo/edit', (req, res, next) => {
 });
 
 router.get('/storeinfo/delete', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('storeinfo-delete', createViewContext({ message: 'Delete Store' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 
