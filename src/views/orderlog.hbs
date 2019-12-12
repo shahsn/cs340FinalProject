@@ -6,6 +6,24 @@
 <form class="side" action="/orderlog/delete" method = "get">
   <button class="side">Delete</button>
 </form>
+<!-- <form class="side" action="/orderlog/item" method = "get">
+  <button class="side"> View</button>
+</form> -->
+
+<label for="view-order">Select Order:</label>
+
+<select id="view-order">
+  {{#if rows.length }}
+      {{#each rows }}
+            <option value = "{{this.oID}}">  {{this.oID}}</option>
+      {{/each}}
+  {{else}}
+      <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+  {{/if}}
+</select>
+
+
+
 <!-- <div class="dropdown">
   <span>View Order</span>
   <div class="dropdown-content">
@@ -20,7 +38,7 @@
               {{#if rows.length }}
                   {{#each rows }}
                       <tr>
-                          <td>{{this.oID}}</td>
+                        <option value = "{{this.oID}}">  {{this.oID}}</option>
                       </tr>
                   {{/each}}
               {{else}}
@@ -31,6 +49,7 @@
   </div>
 </div> -->
 </div>
+
 <table>
   <thead>
     <tr>
