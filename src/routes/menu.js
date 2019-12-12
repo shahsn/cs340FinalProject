@@ -27,6 +27,27 @@ router.get('/menu', (req, res, next) => {
 
 });
 
+router.post('/login', (req, res, next) => {
+  req.db.query(
+      `
+      SELECT *
+      FROM Menu m
+      WHERE m.sID = ?
+      ORDER BY m.sID, m.itemName
+      `, [req.body.sID],
+      (err,results)=>{
+          if (err) return next(err);
+          res.render(
+              'menu',
+              createViewContext({
+                  pageName: 'Store Menu',
+                  rows: results
+              })
+          );
+      }
+  );
+});
+
 /**
  * Route for displaying the form used to add a new menu
  */
