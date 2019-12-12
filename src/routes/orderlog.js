@@ -16,13 +16,24 @@ router.get('/orderlog', (req, res, next) => {
         `,
         (err,results)=>{
             if (err) return next(err);
-            res.render(
-                'orderlog',
-                createViewContext({
-                    pageName: 'Order Log',
-                    rows: results
-                })
-            );
+            req.db.query(
+              `
+              SELECT *
+              FROM Order_Log o
+              ORDER BY o.oID
+              `,
+              (err,resultsID)=>{
+                if (err) return next(err);
+                res.render(
+                  'orderlog',
+                  createViewContext({
+                      pageName: 'Order Log',
+                      rows: results,
+                      stores: resultsID
+                  })
+              );
+            }
+          );
         }
     );
   }
@@ -32,6 +43,26 @@ router.get('/orderlog', (req, res, next) => {
       createViewContext()
     );
   }
+});
+
+router.post('/orderlog', (req, res, next) => {
+  req.db.query(
+    `
+    SELECT *
+    FROM Order_Items o
+    WHERE o.oID = ?
+    `, [req.body.searchOrders],
+    (err,results)=>{
+      if (err) return next(err);
+      res.render(
+        'orderlog-item',
+        createViewContext({
+            pageName: 'Order Items',
+            rows: results
+        })
+      );
+    }
+  );
 });
 
 router.get('/orderlog/edit', (req, res) => {
