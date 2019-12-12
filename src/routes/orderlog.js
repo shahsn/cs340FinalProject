@@ -7,6 +7,7 @@ const router = express.Router();
  * Route for listing order log info.
  */
 router.get('/orderlog', (req, res, next) => {
+  if (req.session.permissions >= 1) {
     req.db.query(
         `
         SELECT *
@@ -24,10 +25,25 @@ router.get('/orderlog', (req, res, next) => {
             );
         }
     );
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 router.get('/orderlog/edit', (req, res) => {
-    res.render('orderlog-edit', createViewContext({ message: 'Add Order' }));
+  if (req.session.permissions >= 1) {
+    res.render('orderlog-edit', createViewContext({ message: 'Edit Orders' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 router.post('/orderlog/edit', (req, res, next) => {
@@ -63,7 +79,15 @@ router.post('/orderlog/edit', (req, res, next) => {
 });
 
 router.get('/orderlog/delete', (req, res) => {
+  if (req.session.permissions >= 1) {
     res.render('orderlog-delete', createViewContext({ message: 'Delete Order' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 

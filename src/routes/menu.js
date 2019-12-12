@@ -28,10 +28,18 @@ router.get('/menu', (req, res, next) => {
 });
 
 /**
- * Route for displaying the form used to add a new menu 
+ * Route for displaying the form used to add a new menu
  */
 router.get('/menu/edit', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('menu-edit', createViewContext({ message: 'Edit Menu' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 /**
@@ -70,7 +78,15 @@ router.post('/menu/edit', (req, res, next) => {
 });
 
 router.get('/menu/delete', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('menu-delete', createViewContext({ message: 'Remove Menu' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 /**
