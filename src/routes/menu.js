@@ -28,10 +28,18 @@ router.get('/menu', (req, res, next) => {
 });
 
 /**
- * Route for displaying the form used to add a new menu 
+ * Route for displaying the form used to add a new menu
  */
 router.get('/menu/edit', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('menu-edit', createViewContext({ message: 'Edit Menu' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 /**
@@ -47,21 +55,38 @@ router.post('/menu/edit', (req, res, next) => {
             context.message = 'cant create that menu item, it already exists at that store';
             res.render('menu-edit',context);
         }else {
-            req.db.query(
-                `INSERT INTO Menu (itemName, itemPrice, sID) VALUES (?,?,?)`,
-                [req.body.itemName, req.body.itemPrice, req.body.sID],
-                err => {
-                    if(err) return next(err);
-                    context.message = 'Added new menu item';
-                    res.render('menu-edit', context);
+            req.db.query(`SELECT  * FROM Store s WHERE s.sID = ?`,[req.body.sID],(err,results)=>{
+                if (err) return next(err);
+                if(results.length){
+                    req.db.query(
+                        `INSERT INTO Menu (itemName, itemPrice, sID) VALUES (?,?,?)`,
+                        [req.body.itemName, req.body.itemPrice, req.body.sID],
+                        err => {
+                            if(err) return next(err);
+                            context.message = 'Added new menu item';
+                            res.render('menu-edit', context);
+                        }
+                    );
                 }
-            );
+                else{
+                    context.message = 'cant create that menu item, sID invalid';
+                    res.render('menu-edit',context);
+                }
+            });
         }
     });
 });
 
 router.get('/menu/delete', (req, res) => {
+  if (req.session.permissions == 2) {
     res.render('menu-delete', createViewContext({ message: 'Remove Menu' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 /**

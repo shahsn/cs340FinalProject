@@ -7,6 +7,7 @@ const router = express.Router();
  * Route for listing order log info.
  */
 router.get('/orderlog', (req, res, next) => {
+  if (req.session.permissions >= 1) {
     req.db.query(
         `
         SELECT *
@@ -24,10 +25,25 @@ router.get('/orderlog', (req, res, next) => {
             );
         }
     );
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 router.get('/orderlog/edit', (req, res) => {
-    res.render('orderlog-edit', createViewContext({ message: 'Add Order' }));
+  if (req.session.permissions >= 1) {
+    res.render('orderlog-edit', createViewContext({ message: 'Edit Orders' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 router.post('/orderlog/edit', (req, res, next) => {
@@ -40,21 +56,38 @@ router.post('/orderlog/edit', (req, res, next) => {
             context.message = 'cant add that order, it already exists';
             res.render('orderlog-edit',context);
         }else {
-            req.db.query(
-                `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
-                [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
-                err => {
-                    if(err) return next(err);
-                    context.message = 'Added new order!';
-                    res.render('orderlog-edit', context);
+            req.db.query(`SELECT * FROM Store s WHERE s.sID = ?`,[req.body.sID], (err,results) =>{
+                if(err) return next(err);
+                if(results.length){
+                    req.db.query(
+                        `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
+                        [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
+                        err => {
+                            if(err) return next(err);
+                            context.message = 'Added new order!';
+                            res.render('orderlog-edit', context);
+                        }
+                    );
                 }
-            );
+                else{
+                    context.message = 'cant add that order, sID doesnt exist';
+                    res.render('orderlog-edit',context);
+                }
+            });
         }
     });
 });
 
 router.get('/orderlog/delete', (req, res) => {
+  if (req.session.permissions >= 1) {
     res.render('orderlog-delete', createViewContext({ message: 'Delete Order' }));
+  }
+  else {
+    res.render(
+      'permission_error',
+      createViewContext()
+    );
+  }
 });
 
 
