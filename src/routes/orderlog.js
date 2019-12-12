@@ -40,15 +40,24 @@ router.post('/orderlog/edit', (req, res, next) => {
             context.message = 'cant add that order, it already exists';
             res.render('orderlog-edit',context);
         }else {
-            req.db.query(
-                `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
-                [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
-                err => {
-                    if(err) return next(err);
-                    context.message = 'Added new order!';
-                    res.render('orderlog-edit', context);
+            req.db.query(`SELECT * FROM Store s WHERE s.sID = ?`,[req.body.sID], (err,results) =>{
+                if(err) return next(err);
+                if(results.length){
+                    req.db.query(
+                        `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
+                        [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
+                        err => {
+                            if(err) return next(err);
+                            context.message = 'Added new order!';
+                            res.render('orderlog-edit', context);
+                        }
+                    );
                 }
-            );
+                else{
+                    context.message = 'cant add that order, sID doesnt exist';
+                    res.render('orderlog-edit',context);
+                }
+            });
         }
     });
 });
