@@ -35,10 +35,11 @@ router.post('/login', (req, res, next) => {
     )
   }
   else if (
-    req.db.query(`SELECT COUNT(1) FROM Employee e WHERE ? = (SELECT e.eID FROM Employee e)`, [req.body.eID], (err,results) => {
+    req.db.query(`SELECT * FROM Employee e WHERE e.eID = ?`, [req.body.eID], (err,results) => {
       if (err) return next(err);
-    })
+    }).length > 0
   ){
+    console.log("test3");
     req.session.permissions = 1;
     res.render(
       'home',
