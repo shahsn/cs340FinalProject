@@ -7,7 +7,7 @@ const router = express.Router();
  * Route for listing store info.
  */
 router.get('/emp', (req, res, next) => {
-  if (req.session.permissions == 2) {
+  if (req.session.permissions == 1) {
     req.db.query(
         `
         SELECT *

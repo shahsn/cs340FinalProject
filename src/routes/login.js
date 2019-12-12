@@ -17,28 +17,46 @@ router.get('/login', (req, res, next) => {
     );
 });
 
-/*
-router.post('/emp/edit', (req, res, next) => {
-  let context = createViewContext();
-
+router.post('/login', (req, res, next) => {
+  console.log("test");
   if (
-    req.db.query(`? IN (SELECT e.eID FROM Employee e WHERE e.eID = Manager)`, [req.body.eID] (err,results) => {
+    (req.db.query(`SELECT COUNT(1) FROM Employee e WHERE ? = (SELECT e.eID FROM Employee e WHERE e.job = 'Manager')`, [req.body.eID], (err,results) => {
       if (err) return next(err);
-    });
+    })) == 1
   ){
+    console.log("test2");
     req.session.permissions = 2;
+    res.render(
+      'home',
+      createViewContext({
+          pageName: 'Manager Page'/*,
+          rows: []*/
+      })
+    )
   }
   else if (
-    req.db.query(`? IN (SELECT e.eID FROM Employee e`, [req.body.eID] (err,results) => {
+    req.db.query(`SELECT COUNT(1) FROM Employee e WHERE ? = (SELECT e.eID FROM Employee e)`, [req.body.eID], (err,results) => {
       if (err) return next(err);
-    });
+    })
   ){
     req.session.permissions = 1;
+    res.render(
+      'home',
+      createViewContext({
+          pageName: 'Employee Page'/*,
+          rows: []*/
+      })
+    )
   }
   else {
     req.session.permissions = 0;
+    res.render(
+      'home',
+      createViewContext({
+          pageName: 'Customer Page'/*,
+          rows: []*/
+      })
+    )
   }
-}
 });
-*/
 module.exports = router;
