@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: classmysql.engr.oregonstate.edu:3306
--- Generation Time: Dec 11, 2019 at 01:49 AM
+-- Generation Time: Dec 12, 2019 at 12:33 AM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.0.33
 
@@ -41,13 +41,10 @@ CREATE TABLE `Employee` (
 --
 
 INSERT INTO `Employee` (`eID`, `fName`, `lName`, `job`, `sID`) VALUES
-(111111111, 'John', 'Smith', 'Cashier', 100000001),
-(111111112, 'Morgan', 'Bonds', 'Manager', 100000002),
 (111111113, 'Jacob', 'Edgerton', 'Cashier', 100000003),
 (111111114, 'Josh', 'Adams', 'Delivery', 100000004),
 (111111115, 'George', 'Brown', 'Drive-through', 100000005),
 (111111116, 'Bob', 'Shields', 'Cook', 100000006),
-(111111117, 'Jaiden', 'Cline', 'Cashier', 100000007),
 (111111118, 'Ronaldo', 'Newman', 'Manager', 100000008),
 (111111119, 'Hannah', 'Brooker', 'Cook', 100000009),
 (111111120, 'Tylor', 'Garrison', 'Drive-through', 100000020);
@@ -71,7 +68,6 @@ CREATE TABLE `Menu` (
 INSERT INTO `Menu` (`itemName`, `itemPrice`, `sID`) VALUES
 ('Burger', '3.00', 100000001),
 ('Chicken Sandwhich', '3.00', 100000004),
-('Double Burger', '5.00', 100000007),
 ('French Fries', '3.00', 100000001),
 ('Ice Cream', '2.00', 100000003),
 ('Milkshake', '2.99', 100000006),
@@ -79,6 +75,18 @@ INSERT INTO `Menu` (`itemName`, `itemPrice`, `sID`) VALUES
 ('Pizza', '6.99', 100000001),
 ('Soda', '1.00', 100000002),
 ('Triple Burger', '6.00', 100000008);
+
+--
+-- Triggers `Menu`
+--
+DELIMITER $$
+CREATE TRIGGER `check_price` BEFORE INSERT ON `Menu` FOR EACH ROW BEGIN
+	if new.itemPrice = 0 THEN
+    SIGNAL SQLSTATE '45000';
+    END IF;
+    END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -103,7 +111,6 @@ INSERT INTO `Order_Items` (`oID`, `itemName`, `quantity`) VALUES
 (3, 'Burger', 1),
 (4, 'Burger', 2),
 (5, 'Triple Burger', 1),
-(6, 'Double Burger', 1),
 (7, 'Nuggets', 2),
 (8, 'Ice Cream', 1),
 (9, 'Ice Cream', 1),
@@ -133,11 +140,20 @@ INSERT INTO `Order_Log` (`oID`, `customerFName`, `totalPrice`, `date`, `sID`) VA
 (3, 'Andre', '3.00', '11/28/19', 100000003),
 (4, 'Jane', '6.00', '11/28/19', 100000001),
 (5, 'Jennet', '6.00', '11/28/19', 100000008),
-(6, 'Aaron', '5.00', '11/28/19', 100000007),
 (7, 'Bob', '4.00', '11/28/19', 100000005),
 (8, 'Mark', '2.00', '11/28/19', 100000003),
 (9, 'Cody', '2.00', '11/28/19', 100000002),
 (10, 'Kate', '4.00', '11/28/19', 100000002);
+
+--
+-- Triggers `Order_Log`
+--
+DELIMITER $$
+CREATE TRIGGER `delete_order_cascade` BEFORE DELETE ON `Order_Log` FOR EACH ROW BEGIN
+	DELETE FROM Order_Items WHERE oid = OLD.oid;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -164,10 +180,28 @@ INSERT INTO `Store` (`sID`, `street`, `city`, `zip`, `hours`) VALUES
 (100000004, '4871 Sussex Court', 'Dallas', 75207, '7:00am - 11:00pm'),
 (100000005, '2965 Jewell Road', 'Minneapolis', 55406, '7:00am - 11:00pm'),
 (100000006, '4346 Hoffman Avenue', 'Brooklyn', 11206, '7:00am - 11:00pm'),
-(100000007, '856 Timberbrook Lane', 'Greeley', 80631, '7:00am - 11:00pm'),
 (100000008, '2562 Dovetail Drive', 'Hickory Hills', 60457, '7:00am - 11:00pm'),
 (100000009, '1970 Heron Way', 'Portland', 97205, '7:00am - 11:00pm'),
 (100000020, '688 Jones Street', 'Blue Mound', 76131, '7:00am - 11:00pm');
+
+--
+-- Triggers `Store`
+--
+DELIMITER $$
+CREATE TRIGGER `check_zip` BEFORE INSERT ON `Store` FOR EACH ROW BEGIN if new.zip < 10000 OR new.zip > 99999
+THEN SIGNAL SQLSTATE '45001'; 
+END IF; 
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `delete_store_cascade` BEFORE DELETE ON `Store` FOR EACH ROW BEGIN 
+	DELETE FROM Employee WHERE sID = OLD.sID;
+    DELETE FROM Order_Log WHERE sID = OLD.sID;
+    DELETE FROM Menu WHERE sID = OLD.sID;
+END
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
