@@ -16,4 +16,29 @@ router.get('/login', (req, res, next) => {
         })
     );
 });
+
+/*
+router.post('/emp/edit', (req, res, next) => {
+  let context = createViewContext();
+
+  if (
+    req.db.query(`? IN (SELECT e.eID FROM Employee e WHERE e.eID = Manager)`, [req.body.eID] (err,results) => {
+      if (err) return next(err);
+    });
+  ){
+    req.session.permissions = 2;
+  }
+  else if (
+    req.db.query(`? IN (SELECT e.eID FROM Employee e`, [req.body.eID] (err,results) => {
+      if (err) return next(err);
+    });
+  ){
+    req.session.permissions = 1;
+  }
+  else {
+    req.session.permissions = 0;
+  }
+}
+});
+*/
 module.exports = router;
