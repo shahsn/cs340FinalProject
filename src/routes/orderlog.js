@@ -56,15 +56,24 @@ router.post('/orderlog/edit', (req, res, next) => {
             context.message = 'cant add that order, it already exists';
             res.render('orderlog-edit',context);
         }else {
-            req.db.query(
-                `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
-                [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
-                err => {
-                    if(err) return next(err);
-                    context.message = 'Added new order!';
-                    res.render('orderlog-edit', context);
+            req.db.query(`SELECT * FROM Store s WHERE s.sID = ?`,[req.body.sID], (err,results) =>{
+                if(err) return next(err);
+                if(results.length){
+                    req.db.query(
+                        `INSERT INTO Order_Log (oID, customerFName,totalPrice, date, sID) VALUES (?,?,?,?,?)`,
+                        [req.body.oID, req.body.customerFName, req.body.totalPrice, req.body.Date, req.body.sID],
+                        err => {
+                            if(err) return next(err);
+                            context.message = 'Added new order!';
+                            res.render('orderlog-edit', context);
+                        }
+                    );
                 }
-            );
+                else{
+                    context.message = 'cant add that order, sID doesnt exist';
+                    res.render('orderlog-edit',context);
+                }
+            });
         }
     });
 });
@@ -94,15 +103,46 @@ router.post('/orderlog/delete', (req, res, next) => {
                 [req.body.oID],
                 err => {
                     if(err) return next(err);
-                    context.message = 'deleted an order';
+                    context.message = 'Deleted an order';
                     res.render('orderlog-delete', context);
                 }
             );
         }else {
-            context.message = 'cant delete that order, it doesnt exist';
+            context.message = 'Cant delete that order, it doesnt exist';
             res.render('orderlog-delete',context);
         }
     });
 });
+
+router.get('/orderlog/item', (req, res) => {
+    res.render('orderlog-item', createViewContext({ message: 'View Order' }));
+});
+
+
+
+router.post('/orderlog/item', (req, res, next) => {
+    let context = createViewContext();
+
+    req.db.query(`SELECT * FROM Order_Log WHERE oID = ? `,[req.body.oID], (err,results) => {
+        if (err) return next(err);
+
+        // if (results.length){
+        //     req.db.query(
+        //         `DELETE FROM Order_Log WHERE oID = ?`,
+        //         [req.body.oID],
+        //         err => {
+        //             if(err) return next(err);
+        //             context.message = 'deleted an order';
+        //             res.render('orderlog-delete', context);
+        //         }
+        //     );
+        // }
+        else {
+            context.message = 'cant view that order, it doesnt exist';
+            res.render('orderlog-view',context);
+        }
+    });
+});
+
 
 module.exports = router;

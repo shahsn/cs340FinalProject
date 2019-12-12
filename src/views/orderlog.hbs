@@ -6,6 +6,30 @@
 <form class="side" action="/orderlog/delete" method = "get">
   <button class="side">Delete</button>
 </form>
+<!-- <div class="dropdown">
+  <span>View Order</span>
+  <div class="dropdown-content">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+        </tr>
+      </thead>
+
+      <tbody>
+              {{#if rows.length }}
+                  {{#each rows }}
+                      <tr>
+                          <td>{{this.oID}}</td>
+                      </tr>
+                  {{/each}}
+              {{else}}
+                  <tr><td colspan="3"><p class='lead'><em>No records were found.</em></p></td></tr>
+              {{/if}}
+          </tbody>
+    </table>
+  </div>
+</div> -->
 </div>
 <table>
   <thead>
